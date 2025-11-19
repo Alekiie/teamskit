@@ -18,8 +18,12 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
-from accounts.views import UserViewSet
+from accounts.views import UserViewSet,CustomLoginView
 from tasks.views import TaskViewSet
+from rest_framework_simplejwt.views import (
+    TokenObtainPairView,
+    TokenRefreshView,
+)
 
 router = DefaultRouter()
 
@@ -28,6 +32,7 @@ router.register(r"tasks", TaskViewSet, basename="tasks")
 
 urlpatterns = [
     path("admin/", admin.site.urls),
-    # path("accounts/", include("accounts.urls")),
     path("api/", include(router.urls)),
+    path("api/auth/login/", CustomLoginView.as_view(), name="token_obtain_pair"),
+    path("api/auth/refresh/", TokenRefreshView.as_view(), name="token_refresh"),
 ]

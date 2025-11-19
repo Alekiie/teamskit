@@ -1,7 +1,12 @@
 from rest_framework.routers import DefaultRouter
-from .views import TaskViewSet
+from django.urls import path
+from .views import TaskViewSet, recent_activity
 
 router = DefaultRouter()
 router.register(r"tasks", TaskViewSet, basename="tasks")
 
-urlpatterns = router.urls
+urlpatterns = [
+    path("tasks/recent/", recent_activity, name="recent-activity"),
+]
+
+urlpatterns += router.urls
