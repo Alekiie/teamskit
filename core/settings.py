@@ -64,6 +64,7 @@ ROOT_URLCONF = "core.urls"
 
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:5173",
+    "https://teamskit.vercel.app"
 ]
 
 CORS_ALLOW_CREDENTIALS = True
