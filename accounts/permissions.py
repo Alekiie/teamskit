@@ -11,7 +11,7 @@ class IsAdmin(BasePermission):
 class IsManager(BasePermission):
     message="Only the manager has the permission to perform this action."
     def has_permission(self, request, view):
-        return request.user.role in ["Manager", "Admin"]
+        return request.user.role in ["Manager"]
 
 
 class IsAdminOrManager(BasePermission):
@@ -21,7 +21,7 @@ class IsAdminOrManager(BasePermission):
 
 class IsMember(BasePermission):
     def has_permission(self, request, view):
-        return request.user.role in ["Admin", "Manager", "Member"]
+        return request.user.role in ["Member"]
 
 
 class IsAssigneeOrReadonly(BasePermission):

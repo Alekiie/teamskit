@@ -3,7 +3,7 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.decorators import action
 from rest_framework.response import Response
 from .models import Task
-from .serializer import TaskSerializer
+from .serializers import  TaskCreateSerializer, TaskDetailSerializer
 from accounts.permissions import IsAssigneeOrReadonly, IsAdminOrManager
 from accounts.models import CustomUser
 from django.shortcuts import get_object_or_404
@@ -11,18 +11,31 @@ from django.shortcuts import get_object_or_404
 
 class TaskViewSet(viewsets.ModelViewSet):
     queryset = Task.objects.all()
-    serializer_class = TaskSerializer
+
+    # serializer_class = TaskSerializer
+    def get_serializer_class(self):
+        if self.action == "create":
+            return TaskCreateSerializer
+        return TaskDetailSerializer
 
     def get_permissions(self):
         user = self.request.user
 
         if self.action in ["create", "destroy"]:
-            if user.role in ["Admin", "Manager"]:
+            if (
+                user.is_authenticated
+                and hasattr(user, "role")
+                and user.role in ["Admin", "Manager"]
+            ):
                 return [IsAuthenticated()]
             return [IsAdminOrManager()]
 
         if self.action in ["update", "partial_update"]:
-            if user.role in ["Admin", "Manager"]:
+            if (
+                user.is_authenticated
+                and hasattr(user, "role")
+                and user.role in ["Admin", "Manager"]
+            ):
                 return [IsAuthenticated()]
             return [IsAuthenticated(), IsAssigneeOrReadonly()]
 
@@ -37,8 +50,8 @@ class TaskViewSet(viewsets.ModelViewSet):
             return Task.objects.all()
         return Task.objects.filter(assignee=user)
 
-    def perform_create(self, serializer):
-        serializer.save(creator=self.request.user)
+    # def perform_create(self, serializer):
+    #     serializer.save()
 
     def perform_update(self, serializer):
         serializer.save()

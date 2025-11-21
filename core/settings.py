@@ -27,7 +27,7 @@ SECRET_KEY = "django-insecure-y-)balv3enbxrn4^i#o10!^)^2a*%g@k!t!bltp-2#q_0c*i%&
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["127.0.0.1", "localhost", "teamskit.local"]
 
 
 # Application definition
@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     "tasks",
     "corsheaders",
     "rest_framework",
+    "drf_spectacular",
 ]
 AUTH_USER_MODEL = "accounts.CustomUser"
 MIDDLEWARE = [
@@ -146,7 +147,15 @@ STATIC_URL = "static/"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 REST_FRAMEWORK = {
+    "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
     "DEFAULT_AUTHENTICATION_CLASSES": (
         "rest_framework_simplejwt.authentication.JWTAuthentication",
-    )
+    ),
+}
+SPECTACULAR_SETTINGS = {
+    "TITLE": "Teamskit",
+    "DESCRIPTION": "A RBAC Task management system.",
+    "VERSION": "1.0.0",
+    "SERVE_INCLUDE_SCHEMA": False,
+    
 }

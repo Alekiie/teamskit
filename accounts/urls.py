@@ -1,4 +1,10 @@
 from django.urls import path
+from rest_framework.routers import DefaultRouter
 from . import views
 
-# urlpatterns = [path("dashboard/", views.dashboard, name="dashboard")]
+
+router = DefaultRouter()
+
+router.register(r"users", views.UserViewSet, basename="users")
+
+urlpatterns = router.urls

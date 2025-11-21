@@ -17,22 +17,26 @@ Including another URLconf
 
 from django.contrib import admin
 from django.urls import path, include
-from rest_framework.routers import DefaultRouter
-from accounts.views import UserViewSet,CustomLoginView
-from tasks.views import TaskViewSet
+from accounts.views import  CustomLoginView
 from rest_framework_simplejwt.views import (
     TokenObtainPairView,
     TokenRefreshView,
 )
+from drf_spectacular.views import SpectacularSwaggerView, SpectacularAPIView
 
-router = DefaultRouter()
 
-router.register(r"users", UserViewSet, basename="users")
-router.register(r"tasks", TaskViewSet, basename="tasks")
+
 
 urlpatterns = [
     path("admin/", admin.site.urls),
-    path("api/", include(router.urls)),
+    path("api/", include("accounts.urls")),
+    path("api/", include("tasks.urls")),
     path("api/auth/login/", CustomLoginView.as_view(), name="token_obtain_pair"),
     path("api/auth/refresh/", TokenRefreshView.as_view(), name="token_refresh"),
+    path("api/schema/", SpectacularAPIView.as_view(), name="schema"),
+    path(
+        "api/schema/swagger-ui/",
+        SpectacularSwaggerView.as_view(url_name="schema"),
+        name="swagger-ui",
+    ),
 ]
