@@ -27,7 +27,7 @@ SECRET_KEY = "django-insecure-y-)balv3enbxrn4^i#o10!^)^2a*%g@k!t!bltp-2#q_0c*i%&
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["127.0.0.1", "localhost", "teamskit.local"]
+ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS", "").split(",")
 
 
 # Application definition
