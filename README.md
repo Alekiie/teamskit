@@ -70,6 +70,13 @@ The project runs on port 3000.
 | `/api/auth/login/` | POST |
 | `/api/tasks/recent/` | GET |
 | `/api/tasks/:id/assign_task ` | POST (Based on user permisssion) |
+|
+
+
+
+
+The project API documentation is available on: `/api/schema/swagger-ui`
+
 
 ## Environmental Variables
 On the `.env` file, enter the values for the following variables":
@@ -82,6 +89,7 @@ DB_HOST=localhost
 DB_PORT=3306
 SECRET_KEY=yoursecretkey
 DEBUG=True
-ALLOWED_HOSTS=127.0.0.1", "localhost", "teamskit.local"
+ALLOWED_HOSTS=127.0.0.1, localhost, teamskit.local
 
 ```
+
